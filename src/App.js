@@ -19,6 +19,12 @@ function App() {
       .catch((error) => console.log(error.status));
   };
 
+  const getBiggestRepo = () => {
+    let biggestRepoSize = Math.max(...repos.map((r) => r.size));
+    let biggestRepo = repos.find((r) => r.size === biggestRepoSize);
+    return biggestRepo.name;
+  };
+
   useEffect(() => {
     getAllRepos(owner);
   }, []);
@@ -27,6 +33,11 @@ function App() {
     <div className="App">
       <h3>All {owner} repos: </h3>
       <p>number of repos: {repos.length}</p>
+      {repos.length > 0 && (
+        <p>
+          The biggest repository of {owner}: is {getBiggestRepo()}
+        </p>
+      )}
     </div>
   );
 }
