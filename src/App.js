@@ -9,46 +9,45 @@ const octokit = new Octokit({
 function App() {
   const [organization, setOrganization] = useState("octokit");
   const [repos, setRepos] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(100);
-
-  const getReposFromOnePage = () => {
-    console.log("getting repos");
-    octokit
-      .request(`GET /orgs/${organization}/repos`, { per_page: itemsPerPage, page: pageNumber })
-      .then((result) => {
-        let updatedRepos = repos.concat(result.data);
-        setRepos(updatedRepos);
-        if (result.data.length >= itemsPerPage) setPageNumber((prev) => prev + 1);
-      })
-      .catch((error) => console.log(error.status));
-  };
+  const [biggestRepo, setBiggestRepo] = useState("");
 
   const getAllRepos = () => {
-    if (repos.length === 0 || repos.length === itemsPerPage) getReposFromOnePage();
+    octokit
+      .paginate(`GET /orgs/${organization}/repos`, {})
+      .then((res) => {
+        setRepos(res);
+        return res;
+      })
+      .then((res) => {
+        getBiggestRepo(res);
+      })
+      .catch((err) => err.status);
   };
 
-  const getBiggestRepo = () => {
-    let biggestRepoSize = Math.max(...repos.map((r) => r.size));
-    let biggestRepo = repos.find((r) => r.size === biggestRepoSize);
-    return biggestRepo.name;
+  const getBiggestRepo = (repoList) => {
+    console.log(repoList);
+    let biggestRepoSize = Math.max(...repoList.map((r) => r.size));
+    let biggestRepository = repoList.find((r) => r.size === biggestRepoSize);
+    setBiggestRepo(biggestRepository);
   };
 
   useEffect(() => {
     getAllRepos();
-  }, [pageNumber]);
+  }, []);
 
-  console.log(repos.length);
+  console.log(biggestRepo);
 
   return (
     <div className="App">
       <h3>All {organization} repos: </h3>
-      <p>number of repos per page: {itemsPerPage}</p>
-      <p>TRUE REPOS COUNT: {repos.length}</p>
+
       {repos.length > 0 && (
-        <p>
-          The biggest repository of {organization}: is {getBiggestRepo()}
-        </p>
+        <>
+          <p>TOTAL REPOS: {repos.length}</p>
+          <p>
+            The biggest repository of {organization} is: {biggestRepo.name}
+          </p>
+        </>
       )}
     </div>
   );
