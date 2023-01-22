@@ -4,6 +4,7 @@ import { Octokit } from "octokit";
 
 import OrganizationsTracker from "./components/OrganizationsTracker/OrganizationsTracker";
 import SingleOrganization from "./components/SingleOrganization/SingleOrganization";
+import Loader from "./components/Loader/Loader";
 
 const octokit = new Octokit({
   auth: process.env.REACT_APP_MY_TOKEN,
@@ -15,12 +16,15 @@ function App() {
   const [repos, setRepos] = useState([]);
   const [biggestRepo, setBiggestRepo] = useState("");
   const [organizationsCount, setOrganizationsCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const getAllRepos = () => {
+    setIsLoading(true);
     octokit
       .paginate(`GET /orgs/${organization}/repos`, {})
       .then((res) => {
+        setIsLoading(false);
         setRepos(res);
         return res;
       })
@@ -28,10 +32,12 @@ function App() {
         getBiggestRepo(res);
       })
       .catch((err) => {
-        if (err.status === 404) {
+        if (err.status) {
+          setIsLoading(false);
           setErrorMessage(`Hmm could not find organization with title ${organization}! Try typing again..`);
         }
       });
+    setSearchInput("");
   };
 
   const getBiggestRepo = (repoList) => {
@@ -83,16 +89,13 @@ function App() {
         />
         <input className="button" type="submit" value="Submit" />
       </form>
-      {organization && (
-        <SingleOrganization
-          organization={organization}
-          allRepos={repos}
-          biggestRepo={biggestRepo}
-          error={errorMessage}
-        />
+      {isLoading && <Loader />}
+      {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+      {repos.length > 0 && (
+        <SingleOrganization organization={organization} allRepos={repos} biggestRepo={biggestRepo} />
       )}
 
-      <OrganizationsTracker counter={organizationsCount} updateCounter={getNumberOfOrganizations} />
+      {/* <OrganizationsTracker counter={organizationsCount} updateCounter={getNumberOfOrganizations} /> */}
     </div>
   );
 }

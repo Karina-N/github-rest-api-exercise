@@ -1,14 +1,12 @@
 import "./SingleOrganization.css";
 
 function SingleOrganization(props) {
-  const { organization, allRepos, biggestRepo, error } = props;
+  const { organization, allRepos, biggestRepo } = props;
   return (
     <div className="singleOrganizationContainer">
-      {error && <p className="errorMessage">{error}</p>}
-
       {allRepos.length > 0 && (
         <>
-          <h3>{organization} info: </h3>
+          <h3>You searched for {organization}: </h3>
           <p>Total repositories: {allRepos.length}</p>
           <p>The biggest repository: {biggestRepo.name}</p>
         </>

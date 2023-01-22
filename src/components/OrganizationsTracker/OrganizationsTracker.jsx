@@ -2,15 +2,17 @@ import "./OrganizationsTracker.css";
 import { useState } from "react";
 
 function OrganizationsTracker(props) {
+  const { updateCounter, counter } = props;
+
   const [currentTime, setCurrentTime] = useState("");
 
   const handleClick = () => {
     setCurrentTime(new Date().toDateString() + " " + new Date().toLocaleTimeString());
-    props.updateCounter();
+    updateCounter();
   };
   return (
     <div className="organizationsTracker">
-      <p>Currently there are {props.counter} organizations on Github</p>
+      <p>Currently there are {counter} organizations on Github</p>
       <button className="button" onClick={handleClick}>
         Refresh counter
       </button>
