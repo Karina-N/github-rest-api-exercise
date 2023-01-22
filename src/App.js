@@ -2,6 +2,9 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { Octokit } from "octokit";
 
+import OrganizationsTracker from "./components/OrganizationsTracker/OrganizationsTracker";
+import SingleOrganization from "./components/SingleOrganization/SingleOrganization";
+
 const octokit = new Octokit({
   auth: process.env.REACT_APP_MY_TOKEN,
 });
@@ -12,6 +15,7 @@ function App() {
   const [repos, setRepos] = useState([]);
   const [biggestRepo, setBiggestRepo] = useState("");
   const [organizationsCount, setOrganizationsCount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const getAllRepos = () => {
     octokit
@@ -23,7 +27,11 @@ function App() {
       .then((res) => {
         getBiggestRepo(res);
       })
-      .catch((err) => err.status);
+      .catch((err) => {
+        if (err.status === 404) {
+          setErrorMessage(`Hmm could not find organization with title ${organization}! Try typing again..`);
+        }
+      });
   };
 
   const getBiggestRepo = (repoList) => {
@@ -33,51 +41,58 @@ function App() {
   };
 
   const getNumberOfOrganizations = () => {
-    console.log("i'm in");
     octokit
       .request("GET /search/users?q=type%3Aorg", {})
       .then((result) => {
-        console.log(result.data.total_count);
         setOrganizationsCount(result.data.total_count);
       })
       .catch((error) => console.log(error.status));
   };
 
   useEffect(() => {
-    getAllRepos();
-    getNumberOfOrganizations();
+    if (organization) {
+      getAllRepos();
+    }
   }, [organization]);
 
+  useEffect(() => {
+    getNumberOfOrganizations();
+  }, []);
+
   const handleSubmit = (e) => {
+    setRepos([]);
+    setErrorMessage("");
     e.preventDefault();
-    console.log(e.target[0].value);
-    setOrganization(e.target[0].value);
+    setOrganization(e.target.elements.searchInput.value);
   };
 
   return (
     <div className="App">
-      <p>Currently there are {organizationsCount} organizations on Github</p>
+      <img className="octocatGif" src="/media/octocat.gif" alt="octocat gif" />
+
+      <p>Check how many repositories does a github organization have:</p>
 
       <form onSubmit={handleSubmit}>
         <input
+          className="searchInput"
+          name="searchInput"
           type="text"
           placeholder="Type organization"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        <input type="submit" value="Submit" />
+        <input className="button" type="submit" value="Submit" />
       </form>
-
-      <h3>All {organization} repos: </h3>
-
-      {repos.length > 0 && (
-        <>
-          <p>TOTAL REPOS: {repos.length}</p>
-          <p>
-            The biggest repository of {organization} is: {biggestRepo.name}
-          </p>
-        </>
+      {organization && (
+        <SingleOrganization
+          organization={organization}
+          allRepos={repos}
+          biggestRepo={biggestRepo}
+          error={errorMessage}
+        />
       )}
+
+      <OrganizationsTracker counter={organizationsCount} updateCounter={getNumberOfOrganizations} />
     </div>
   );
 }
