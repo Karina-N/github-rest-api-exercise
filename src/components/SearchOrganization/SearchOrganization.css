@@ -1,0 +1,25 @@
+
+
+form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+form input.searchInput {
+  height: 40px;
+  border-radius: 7px;
+  border: 1px solid lightgrey;
+  flex-grow: 1;
+  margin-right: 1rem;
+  padding-left: 1rem;
+  font-size: 1em;
+}
+
+form input.searchInput:hover,
+form input.searchInput:focus {
+  border: 1px solid grey;
+  outline: grey;
+}

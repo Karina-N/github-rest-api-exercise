@@ -1,0 +1,79 @@
+.homepageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.homepageContainer .box {
+  border: 1px solid lightgrey;
+  border-radius: 7px;
+  padding: 1rem;
+  margin: 1rem;
+  width: 90%;
+  height: 120px;
+  max-width: 600px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.homepageContainer .box.left .clickBox {
+  border: none;
+}
+
+.fingerIcon {
+  height: 3rem;
+}
+
+.clickBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 1rem;
+  width: 90%;
+  height: 60px;
+  border-radius: 7px;
+  border: 1px solid lightgrey;
+}
+
+.clickBox .searchInput {
+  height: 54px;
+}
+
+.clickBox button {
+  height: 58px;
+  border: 1px solid lightgrey;
+  background-color: #fff;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.clickBox button:hover {
+  border: 1px solid #98daf1;
+  background-color: #98daf1;
+}
+
+.clickBox.counter {
+  text-decoration: none;
+  color: #000;
+}
+
+.clickBox.counter:hover,
+.clickBox.counter:active,
+.clickBox.counter:focus {
+  color: #000;
+  background-color: #98daf1;
+}
+
+@media (min-width: 940px) {
+  .homepageContainer {
+    flex-direction: row;
+  }
+
+  .homepageContainer .box {
+    width: 50%;
+  }
+}
