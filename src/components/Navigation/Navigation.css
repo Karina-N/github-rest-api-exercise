@@ -1,0 +1,55 @@
+.octocatGifIcon {
+  height: 3rem;
+}
+
+.navbar {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid lightgrey;
+}
+
+.navbarDesktop {
+  display: none;
+}
+
+.navbarMobile {
+  display: flex;
+  margin-right: 1rem;
+  font-size: 1.6em;
+}
+
+.navbarMobile .dropdown-menu {
+  width: 100vw;
+  text-align: right;
+  padding: 0;
+  margin-top: 1rem;
+  border-top: none;
+}
+
+.navbarMobile .dropdown-item {
+  font-size: 0.8em;
+}
+
+@media (min-width: 740px) {
+  .navbarMobile {
+    display: none;
+  }
+
+  .navbarDesktop {
+    display: flex;
+  }
+
+  .navbarLink {
+    text-decoration: none;
+    color: #000;
+    font-size: 0.8em;
+  }
+
+  .navbarLink.right {
+    margin-left: 1rem;
+  }
+
+  .navbarLink:hover {
+    color: rgb(102, 102, 102);
+  }
+}

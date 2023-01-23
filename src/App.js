@@ -1,11 +1,12 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Octokit } from "octokit";
 import { Route, Routes } from "react-router";
-import { Link } from "react-router-dom";
 
-import OrganizationsTracker from "./components/OrganizationsTracker/OrganizationsTracker";
-import SearchOrganization from "./components/SearchOrganization/SearchOrganization";
+import Navigation from "./components/Navigation/Navigation";
 import Homepage from "./components/Homepage/Homepage";
+import SearchOrganization from "./components/SearchOrganization/SearchOrganization";
+import OrganizationsTracker from "./components/OrganizationsTracker/OrganizationsTracker";
 
 const octokit = new Octokit({
   auth: process.env.REACT_APP_MY_TOKEN,
@@ -14,17 +15,7 @@ const octokit = new Octokit({
 function App() {
   return (
     <div className="App">
-      <nav className="navbar">
-        <Link className="navbarLink left" to="/">
-          <img className="octocatGifIcon" src="/media/octocat.gif" alt="octocat gif" />
-        </Link>
-        <Link className="navbarLink right" to="/search-organization">
-          SEARCH ORGANIZATION
-        </Link>
-        <Link className="navbarLink right" to="/organizations-counter">
-          ORGANIZATIONS COUNTER
-        </Link>
-      </nav>
+      <Navigation />
 
       <Routes>
         <Route path="/" element={<Homepage />} />
