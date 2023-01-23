@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   margin: auto;
+  padding: 0 1rem;
 }
 
 .button {
@@ -12,7 +13,6 @@
   border: 1px solid lightgrey;
   background-color: #fff;
   width: 140px;
-  height: 44px;
   font-size: 0.9em;
 }
 
@@ -22,6 +22,7 @@
 }
 
 .errorMessage {
+  margin-top: 1rem;
   color: red;
 }
 

@@ -5,28 +5,50 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 form {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0;
 }
 
 form input.searchInput {
   height: 40px;
+  width: 100%;
   border-radius: 7px;
   border: 1px solid lightgrey;
   flex-grow: 1;
-  margin-right: 1rem;
   padding-left: 1rem;
   font-size: 1em;
+  margin-bottom: 0.5rem;
+}
+
+form .button {
+  width: 100%;
 }
 
 form input.searchInput:hover,
 form input.searchInput:focus {
   border: 1px solid grey;
   outline: grey;
+}
+
+@media (min-width: 940px) {
+  form {
+    flex-direction: row;
+  }
+
+  form input.searchInput {
+    width: 80%;
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+
+  form .button {
+    width: 20%;
+  }
 }

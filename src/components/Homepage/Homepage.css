@@ -3,7 +3,6 @@
 }
 
 .octokatContainer {
-  width: 100%;
   height: 40vh;
   position: relative;
 }
@@ -24,52 +23,52 @@
 }
 
 .homepageContainer .box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   border: 1px solid lightgrey;
   border-radius: 7px;
-  padding: 1rem;
+  padding: 1.5rem 0;
   margin: 1rem;
   width: 90%;
-  height: 120px;
-  max-width: 600px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.homepageContainer .box.left .clickBox {
-  border: none;
-}
-
-.fingerIcon {
-  height: 3rem;
+  height: 160px;
 }
 
 .clickBox {
   display: flex;
   justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 1rem;
+  align-items: flex-end;
   width: 90%;
-  height: 60px;
   border-radius: 7px;
-  border: 1px solid lightgrey;
 }
 
 .clickBox .searchInput {
-  height: 54px;
+  height: 100%;
+  width: 100%;
+}
+
+.clickBox form {
+  display: flex;
+  flex-direction: column;
+  height: 5rem;
+}
+
+.clickBox form .searchInput {
+  margin-right: 0;
 }
 
 .clickBox button {
-  height: 58px;
   border: 1px solid lightgrey;
   background-color: #fff;
   border-radius: 7px;
-  cursor: pointer;
+  height: 100%;
+  font-size: 0.9em;
+  width: 100%;
 }
 
 .clickBox button:hover {
-  border: 1px solid #98daf1;
   background-color: #98daf1;
 }
 
@@ -77,6 +76,13 @@
   text-decoration: none;
   color: #000;
   font-size: 0.9rem;
+  border: 1px solid lightgrey;
+  height: 3rem;
+  align-items: center;
+}
+
+.clickBox.counter > p {
+  margin-bottom: 0;
 }
 
 .clickBox.counter:hover,
@@ -92,6 +98,21 @@
   }
 
   .homepageContainer .box {
+    padding: 1.5rem 1rem;
     width: 50%;
+  }
+
+  .clickBox form {
+    flex-direction: row;
+    height: 3rem;
+  }
+
+  .clickBox form .searchInput {
+    margin-right: 1rem;
+  }
+
+  .clickBox button {
+    margin-top: 0;
+    width: 20%;
   }
 }

@@ -15,9 +15,7 @@ function Homepage() {
   return (
     <div className="homepageContainer">
       <div className="octokatContainer">
-        <Link to="/">
-          <img className="octocatGif" src="/media/octocat.gif" alt="octocat gif" />
-        </Link>
+        <img className="octocatGif" src="/media/octocat.gif" alt="octocat gif" />
       </div>
       <div className="homepageBoxes">
         <div className="box left">

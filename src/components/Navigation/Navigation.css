@@ -30,6 +30,10 @@
   font-size: 0.8em;
 }
 
+.navbarMobile .dropdown-item:hover {
+  background-color: rgb(244, 244, 244);
+}
+
 @media (min-width: 740px) {
   .navbarMobile {
     display: none;
