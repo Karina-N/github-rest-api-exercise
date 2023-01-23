@@ -28,6 +28,9 @@ function SearchOrganization(props) {
         getBiggestRepo(res);
       })
       .catch((err) => {
+        console.log(organization);
+        console.log(err);
+        console.log(err.status);
         if (err.status) {
           setIsLoading(false);
           setErrorMessage(`Hmm could not find organization with title ${organization}! Try typing again..`);
@@ -64,6 +67,7 @@ function SearchOrganization(props) {
           type="text"
           placeholder="Type organization"
           value={searchInput}
+          required
           onChange={(e) => setSearchInput(e.target.value)}
         />
         <input className="button" type="submit" value="Submit" />

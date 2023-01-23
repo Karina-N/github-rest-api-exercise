@@ -20,6 +20,8 @@
 
 .navbarMobile .dropdown-menu {
   width: 100vw;
+  height: 30vh;
+  justify-content: center;
   text-align: right;
   padding: 0;
   margin-top: 1rem;
