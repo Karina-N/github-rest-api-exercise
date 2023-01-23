@@ -6,7 +6,9 @@ function SingleOrganization(props) {
     <div className="singleOrganizationContainer">
       {allRepos.length > 0 && (
         <>
-          <h3>You searched for {organization}: </h3>
+          <p>
+            Organization: <strong>{organization}</strong>
+          </p>
           <p>Total repositories: {allRepos.length}</p>
           <p>The biggest repository: {biggestRepo.name}</p>
         </>

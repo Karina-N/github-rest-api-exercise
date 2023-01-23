@@ -12,6 +12,24 @@
   margin-bottom: 2rem;
 }
 
+.menu {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menuLink {
+  text-decoration: none;
+  color: #000;
+  padding: 1rem;
+  border-bottom: 1px solid grey;
+}
+
+.menuLink:hover,
+.menuLink:focus {
+  color: #000;
+}
+
 .button {
   padding: 0.5rem;
   border-radius: 7px;
@@ -25,4 +43,8 @@
 .button:hover {
   cursor: pointer;
   background-color: #98daf1;
+}
+
+.errorMessage {
+  color: red;
 }

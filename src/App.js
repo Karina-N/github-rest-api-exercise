@@ -18,6 +18,15 @@ function App() {
         <img className="octocatGif" src="/media/octocat.gif" alt="octocat gif" />
       </Link>
 
+      <div className="menu">
+        <Link className="menuLink" to="/search-organization">
+          Search Organization
+        </Link>
+        <Link className="menuLink" to="/organizations-counter">
+          Organizations Counter
+        </Link>
+      </div>
+
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/search-organization" element={<SearchOrganization octokit={octokit} />} />
