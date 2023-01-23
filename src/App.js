@@ -14,18 +14,17 @@ const octokit = new Octokit({
 function App() {
   return (
     <div className="App">
-      <Link to="/">
-        <img className="octocatGif" src="/media/octocat.gif" alt="octocat gif" />
-      </Link>
-
-      <div className="menu">
-        <Link className="menuLink" to="/search-organization">
-          Search Organization
+      <nav className="navbar">
+        <Link className="navbarLink left" to="/">
+          <img className="octocatGifIcon" src="/media/octocat.gif" alt="octocat gif" />
         </Link>
-        <Link className="menuLink" to="/organizations-counter">
-          Organizations Counter
+        <Link className="navbarLink right" to="/search-organization">
+          SEARCH ORGANIZATION
         </Link>
-      </div>
+        <Link className="navbarLink right" to="/organizations-counter">
+          ORGANIZATIONS COUNTER
+        </Link>
+      </nav>
 
       <Routes>
         <Route path="/" element={<Homepage />} />

@@ -14,31 +14,35 @@ function Homepage() {
 
   return (
     <div className="homepageContainer">
-      <div className="box left">
-        <p>Looking for specific organization?</p>
-        <div className="clickBox" to="/search-organization">
-          <form>
-            <input
-              className="searchInput"
-              name="searchInput"
-              type="text"
-              placeholder="Type organization"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <button onClick={handleForm}>
-              <img className="fingerIcon" src="/media/fingerIcon.png" alt="finger icon" />
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="box right">
-        <p>Ever wonder how many organizations are there on github?</p>
-        <Link className="clickBox counter" to="/organizations-counter">
-          <p>Click to find out</p>
-          <img className="fingerIcon" src="/media/fingerIcon.png" alt="finger icon" />
+      <div className="octokatContainer">
+        <Link to="/">
+          <img className="octocatGif" src="/media/octocat.gif" alt="octocat gif" />
         </Link>
+      </div>
+      <div className="homepageBoxes">
+        <div className="box left">
+          <p>Looking for specific organization?</p>
+          <div className="clickBox" to="/search-organization">
+            <form>
+              <input
+                className="searchInput"
+                name="searchInput"
+                type="text"
+                placeholder="Type organization"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <button onClick={handleForm}>Search</button>
+            </form>
+          </div>
+        </div>
+
+        <div className="box right">
+          <p>Ever wonder how many organizations are there on github?</p>
+          <Link className="clickBox counter" to="/organizations-counter">
+            <p>Click to find out</p>
+          </Link>
+        </div>
       </div>
     </div>
   );

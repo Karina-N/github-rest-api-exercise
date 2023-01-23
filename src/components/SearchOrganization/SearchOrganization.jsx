@@ -55,7 +55,7 @@ function SearchOrganization(props) {
     setOrganization(e.target.elements.searchInput.value);
   };
   return (
-    <>
+    <div className="searchOrganizationContainer">
       <p>Check how many repositories does a github organization have:</p>
       <form onSubmit={handleSubmit}>
         <input
@@ -74,7 +74,7 @@ function SearchOrganization(props) {
       {repos.length > 0 && (
         <SingleOrganization organization={organization} allRepos={repos} biggestRepo={biggestRepo} />
       )}
-    </>
+    </div>
   );
 }
 
