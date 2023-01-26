@@ -1,16 +1,16 @@
 import "./SingleOrganization.css";
 
 function SingleOrganization(props) {
-  const { organization, allRepos, biggestRepo } = props;
+  const { organization, allRepos } = props;
+  
   return (
     <div className="singleOrganizationContainer">
-      {allRepos.length > 0 && (
+      {allRepos > 0 && (
         <>
           <p>
             Organization: <strong>{organization}</strong>
           </p>
-          <p>Total repositories: {allRepos.length}</p>
-          <p>The biggest repository: {biggestRepo.name}</p>
+          <p>Total repositories: {allRepos}</p>
         </>
       )}
     </div>

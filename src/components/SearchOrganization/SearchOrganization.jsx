@@ -10,41 +10,50 @@ function SearchOrganization(props) {
 
   const [searchInput, setSearchInput] = useState("");
   const [organization, setOrganization] = useState(location.state);
-  const [repos, setRepos] = useState([]);
-  const [biggestRepo, setBiggestRepo] = useState("");
+  const [repos, setRepos] = useState(0);
+  // const [biggestRepo, setBiggestRepo] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const getAllRepos = () => {
+  function getNumberOfRepos(url) {
     setIsLoading(true);
+    let numOfReposInFullPages = 0;
+    let totalPages = 0;
+
     octokit
-      .paginate(`GET /orgs/${organization}/repos`, {})
+      .request(`GET ${url}`, { per_page: 100, rel: "last" })
+      .then((res) => {
+        /* if there is 100 items per page, find the count of total pages */
+        if (res.data.length === 100) {
+          const linkHeader = res.headers.link;
+
+          // example of linkHeader format:
+          // github.com/orgs/rel=last&page=2>; rel="next", github.com/orgs/rel=last&page=5>; rel="last"
+
+          let totalPages = linkHeader.split(" ")[2].split("rel=last&page=")[1].split(">")[0];
+          numOfReposInFullPages = 100 * (totalPages - 1);
+        }
+        return octokit.request(`GET /orgs/${organization}/repos`, { per_page: 100, page: totalPages });
+      })
       .then((res) => {
         setIsLoading(false);
-        setRepos(res);
-        return res;
+        let totalNumOfRepos = numOfReposInFullPages + res.data.length;
+        setRepos(totalNumOfRepos);
       })
-      .then((res) => {
-        getBiggestRepo(res);
-      })
-      .catch((err) => {
-        if (err.status) {
-          setIsLoading(false);
-          setErrorMessage(`Hmm could not find organization with title ${organization}! Try typing again..`);
-        }
-      });
-    setSearchInput("");
-  };
+      .catch((err) => console.log(err));
 
-  const getBiggestRepo = (repoList) => {
-    let biggestRepoSize = Math.max(...repoList.map((r) => r.size));
-    let biggestRepository = repoList.find((r) => r.size === biggestRepoSize);
-    setBiggestRepo(biggestRepository);
-  };
+    setSearchInput("");
+  }
+
+  // const getBiggestRepo = (repoList) => {
+  //   let biggestRepoSize = Math.max(...repoList.map((r) => r.size));
+  //   let biggestRepository = repoList.find((r) => r.size === biggestRepoSize);
+  //   setBiggestRepo(biggestRepository);
+  // };
 
   useEffect(() => {
     if (organization) {
-      getAllRepos();
+      getNumberOfRepos(`/orgs/${organization}/repos`);
     }
   }, [organization]);
 
@@ -54,6 +63,7 @@ function SearchOrganization(props) {
     e.preventDefault();
     setOrganization(e.target.elements.searchInput.value);
   };
+  
   return (
     <div className="searchOrganizationContainer">
       <p>Check how many repositories does a github organization have:</p>
@@ -72,9 +82,7 @@ function SearchOrganization(props) {
       {isLoading && <Loader />}
 
       {errorMessage && <p className="errorMessage">{errorMessage}</p>}
-      {repos.length > 0 && (
-        <SingleOrganization organization={organization} allRepos={repos} biggestRepo={biggestRepo} />
-      )}
+      {repos > 0 && <SingleOrganization organization={organization} allRepos={repos} />}
     </div>
   );
 }
