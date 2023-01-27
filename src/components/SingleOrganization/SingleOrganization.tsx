@@ -1,7 +1,14 @@
 import "./SingleOrganization.css";
 
-function SingleOrganization(props) {
-  const { organization, allRepos, biggestRepo } = props;
+export interface SingleOrganizationProps {
+  organization: string;
+  allRepos: Array<object>;
+  biggestRepo: {
+    name: string;
+  };
+}
+
+function SingleOrganization({ organization, allRepos, biggestRepo }: SingleOrganizationProps) {
   return (
     <div className="singleOrganizationContainer">
       {allRepos.length > 0 && (

@@ -7,7 +7,7 @@ function Homepage() {
 
   const navigate = useNavigate();
 
-  const handleForm = (e) => {
+  const handleForm = (e: any) => {
     e.preventDefault();
     navigate("/search-organization", { state: searchInput });
   };
@@ -20,7 +20,7 @@ function Homepage() {
       <div className="homepageBoxes">
         <div className="box left">
           <p>Looking for specific organization?</p>
-          <div className="clickBox" to="/search-organization">
+          <div className="clickBox" data-to="/search-organization">
             <form>
               <input
                 className="searchInput"

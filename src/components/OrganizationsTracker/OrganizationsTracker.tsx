@@ -2,22 +2,35 @@ import "./OrganizationsTracker.css";
 import { useState, useEffect } from "react";
 import Loader from "../Loader/Loader";
 
-function OrganizationsTracker(props) {
-  const { octokit } = props;
+export interface SearchOrganizationProps {
+  octokit: {
+    [key: string]: any;
+  };
+}
 
-  const [currentTime, setCurrentTime] = useState("");
-  const [organizationsCount, setOrganizationsCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+export interface responseType {
+  res: {
+    [key: string]: any;
+  };
+  data: {
+    [key: string]: any;
+  };
+}
+
+function OrganizationsTracker({ octokit }: SearchOrganizationProps) {
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [organizationsCount, setOrganizationsCount] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getNumberOfOrganizations = () => {
     setIsLoading(true);
     octokit
       .request("GET /search/users?q=type%3Aorg", {})
-      .then((result) => {
+      .then((res: responseType) => {
         setIsLoading(false);
-        setOrganizationsCount(result.data.total_count);
+        setOrganizationsCount(res.data.total_count);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         setIsLoading(false);
         console.log(error.status);
       });

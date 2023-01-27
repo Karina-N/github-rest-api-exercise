@@ -4,30 +4,35 @@ import { useLocation } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import SingleOrganization from "../SingleOrganization/SingleOrganization";
 
-function SearchOrganization(props) {
-  const { octokit } = props;
+export interface SearchOrganizationProps {
+  octokit: {
+    [key: string]: any;
+  };
+}
+
+function SearchOrganization({ octokit }: SearchOrganizationProps) {
   const location = useLocation();
 
-  const [searchInput, setSearchInput] = useState("");
-  const [organization, setOrganization] = useState(location.state);
-  const [repos, setRepos] = useState([]);
-  const [biggestRepo, setBiggestRepo] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [organization, setOrganization] = useState<string>(location.state);
+  const [repos, setRepos] = useState<any[]>([]);
+  const [biggestRepo, setBiggestRepo] = useState<any>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const getAllRepos = () => {
     setIsLoading(true);
     octokit
       .paginate(`GET /orgs/${organization}/repos`, {})
-      .then((res) => {
+      .then((res: any) => {
         setIsLoading(false);
         setRepos(res);
         return res;
       })
-      .then((res) => {
+      .then((res: any) => {
         getBiggestRepo(res);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         if (err.status) {
           setIsLoading(false);
           setErrorMessage(`Hmm could not find organization with title ${organization}! Try typing again..`);
@@ -36,9 +41,9 @@ function SearchOrganization(props) {
     setSearchInput("");
   };
 
-  const getBiggestRepo = (repoList) => {
-    let biggestRepoSize = Math.max(...repoList.map((r) => r.size));
-    let biggestRepository = repoList.find((r) => r.size === biggestRepoSize);
+  const getBiggestRepo = (repoList: any) => {
+    let biggestRepoSize = Math.max(...repoList.map((r: any) => r.size));
+    let biggestRepository = repoList.find((r: any) => r.size === biggestRepoSize);
     setBiggestRepo(biggestRepository);
   };
 
@@ -48,7 +53,7 @@ function SearchOrganization(props) {
     }
   }, [organization]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     setRepos([]);
     setErrorMessage("");
     e.preventDefault();

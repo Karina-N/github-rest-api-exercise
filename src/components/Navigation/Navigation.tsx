@@ -18,7 +18,7 @@ function Navigation() {
         </Link>
       </div>
 
-      <NavDropdown className="navbarMobile" id="nav-dropdown">
+      <NavDropdown title="mobile-menu" className="navbarMobile" id="nav-dropdown">
         <NavDropdown.Item as={Link} to="/search-organization">
           SEARCH ORGANIZATION
         </NavDropdown.Item>
