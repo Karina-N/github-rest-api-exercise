@@ -30,10 +30,11 @@ function SearchOrganization(props) {
           // example of linkHeader format:
           // github.com/orgs/rel=last&page=2>; rel="next", github.com/orgs/rel=last&page=5>; rel="last"
 
-          let totalPages = linkHeader.split(" ")[2].split("rel=last&page=")[1].split(">")[0];
+          totalPages = linkHeader.split(" ")[2].split("rel=last&page=")[1].split(">")[0];
           numOfReposInFullPages = 100 * (totalPages - 1);
         }
-        return octokit.request(`GET /orgs/${organization}/repos`, { per_page: 100, page: totalPages });
+
+        return octokit.request(`GET ${url}`, { per_page: 100, page: totalPages });
       })
       .then((res) => {
         setIsLoading(false);
@@ -63,7 +64,7 @@ function SearchOrganization(props) {
     e.preventDefault();
     setOrganization(e.target.elements.searchInput.value);
   };
-  
+
   return (
     <div className="searchOrganizationContainer">
       <p>Check how many repositories does a github organization have:</p>
